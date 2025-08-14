@@ -1,1 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compra y venta de ganado – Nariño</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <!-- NAV -->
+    <nav class="flex gap-4 mb-6">
+      <button id="btnVistaCompra" class="px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+        Compra y Venta
+      </button>
+      <button id="btnVistaGuia" class="px-4 py-2 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600">
+        Guías de Alimentación
+      </button>
+    </nav>
+
+    <!-- ==================== VISTA COMPRA Y VENTA ==================== -->
+    <div id="vistaCompra">
+      <header class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+          Compra y venta de ganado en Nariño
+        </h1>
+        <p class="mt-2 text-gray-600">Encuentra ganado disponible para compra y venta en Nariño</p>
+      </header>
+
+      <!-- FILTROS -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-4 bg-white p-4 rounded-xl shadow">
+        
+        <!-- Clima -->
+        <div class="flex flex-col">
+          <label for="clima" class="text-sm font-medium text-gray-700 mb-1">Clima</label>
+          <select id="clima" class="h-10 rounded-lg border-gray-300">
+            <option value="">Todos</option>
+            <option value="Frio">Frío</option>
+            <option value="Caliente">Caliente</option>
+          </select>
+        </div>
+
+        <!-- Raza -->
+        <div class="flex flex-col">
+          <label for="raza" class="text-sm font-medium text-gray-700 mb-1">Raza</label>
+          <select id="raza" class="h-10 rounded-lg border-gray-300">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <!-- Sexo -->
+        <div class="flex flex-col">
+          <label for="sexo" class="text-sm font-medium text-gray-700 mb-1">Sexo</label>
+          <select id="sexo" class="h-10 rounded-lg border-gray-300">
+            <option value="">Ambos</option>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+          </select>
+        </div>
+
+        <!-- Edad máx -->
+        <div class="flex flex-col">
+          <label for="edad" class="text-sm font-medium text-gray-700 mb-1">Edad máx. (años)</label>
+          <input id="edad" type="number" min="0" class="h-10 rounded-lg border-gray-300 px-3" placeholder="Ej: 3" />
+        </div>
+
+        <!-- Peso máx -->
+        <div class="flex flex-col">
+          <label for="peso" class="text-sm font-medium text-gray-700 mb-1">Peso máx. (kg)</label>
+          <input id="peso" type="number" min="0" class="h-10 rounded-lg border-gray-300 px-3" placeholder="Ej: 450" />
+        </div>
+
+        <!-- Precio máx -->
+        <div class="flex flex-col">
+          <label for="precio" class="text-sm font-medium text-gray-700 mb-1">Precio máx. (COP)</label>
+          <input id="precio" type="number" min="0" class="h-10 rounded-lg border-gray-300 px-3" placeholder="Ej: 4200000" />
+        </div>
+
+        <!-- Ciudad -->
+        <div class="flex flex-col">
+          <label for="ciudad" class="text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+          <select id="ciudad" class="h-10 rounded-lg border-gray-300">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <!-- Reset -->
+        <div class="flex items-end">
+          <button id="btnReset" class="w-full h-10 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600">
+            Limpiar
+          </button>
+        </div>
+        
+      </section>
+
+      <!-- Aviso -->
+      <div class="mt-4 bg-blue-50 text-blue-900 p-4 rounded-lg">
+        Recuerda tener tu GSMi del ICA válido en caso de movilización entre municipios.
+      </div>
+
+      <!-- LISTA -->
+      <section id="lista" class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></section>
+    </div>
+
+    <!-- ==================== VISTA GUÍA DE ALIMENTACIÓN ==================== -->
+    <div id="vistaGuia" class="hidden">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Guías de Alimentación para Ganado</h2>
+      <p class="mb-6 text-gray-600">Selecciona las características del animal para ver recomendaciones.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white p-4 rounded-xl shadow mb-6">
+        <div>
+          <label for="guiaSexo" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
+          <select id="guiaSexo" class="h-10 rounded-lg border-gray-300 w-full">
+            <option value="">Seleccionar</option>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+          </select>
+        </div>
+        <div>
+          <label for="guiaEdad" class="block text-sm font-medium text-gray-700 mb-1">Edad (años)</label>
+          <input id="guiaEdad" type="number" min="0" class="h-10 rounded-lg border-gray-300 w-full px-3" placeholder="Ej: 2" />
+        </div>
+        <div class="flex items-end">
+          <button id="btnGuia" class="w-full h-10 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600">
+            Ver guía
+          </button>
+        </div>
+      </div>
+
+      <div id="resultadoGuia" class="bg-gray-50 p-4 rounded-lg text-gray-800"></div>
+    </div>
+  </div>
+
+  <script>
+    // Municipios básicos de Nariño (puedes expandir con veredas)
+    const municipios = [
+      "Pasto", "Ipiales", "Tumaco", "Barbacoas", "La Unión", "Sandoná", "Consacá",
+      "Pupiales", "El Tambo", "Buesaco", "Mallama", "Cumbal", "Guachucal"
+    ];
+
+    const razasPorClima = {
+      Frio: ["Holstein", "Normando", "Jersey", "Pardo Suizo", "Cruces"],
+      Caliente: ["Brahman", "Gyr", "Cebú", "Girolando", "Común"]
+    };
+
+    const animales = [
+      { id: 1, raza: "Girolando", clima: "Caliente", edad: 2, peso: 500, sexo: "Hembra", municipio: "Pasto", precio: 3600000, imagen: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSSjOBYytYC-cEeQ-XqW7jRoE4lr0TKliZ7m___SwWuVGrqv9cXzriUaFaMtbQAqQjpfvTEANA_WRrlaYF3E8wmM2bf__gjm5NoAvhInyzu" },
+      { id: 2, raza: "Holstein", clima: "Frio", edad: 2, peso: 500, sexo: "Hembra", municipio: "Ipiales", precio: 3600000, imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSycyjxp5NcOh6WHb9H00RXsDZRpnJyX4u7c9IW2CSeGA0fJujChAG4LSlz8HwNhzpbSI3stjNscsOrGsC2HmPZOlnMjm9PSmcHfzUOFA-TQA" },
+      { id: 3, raza: "Brahman", clima: "Caliente", edad: 3, peso: 450, sexo: "Macho", municipio: "Tumaco", precio: 4200000, imagen: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Brahman_cattle.jpg" }
+    ];
+
+    // Elementos DOM
+    const $lista = document.getElementById("lista");
+    const $clima = document.getElementById("clima");
+    const $raza = document.getElementById("raza");
+    const $sexo = document.getElementById("sexo");
+    const $edad = document.getElementById("edad");
+    const $peso = document.getElementById("peso");
+    const $precio = document.getElementById("precio");
+    const $ciudad = document.getElementById("ciudad");
+    const $btnReset = document.getElementById("btnReset");
+
+    // Poblar ciudad
+    municipios.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m;
+      opt.textContent = m;
+      $ciudad.appendChild(opt);
+    });
+
+    function poblarRazas(filtroClima = "") {
+      $raza.innerHTML = `<option value="">Todas</option>`;
+      if (filtroClima && razasPorClima[filtroClima]) {
+        razasPorClima[filtroClima].forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r;
+          opt.textContent = r;
+          $raza.appendChild(opt);
+        });
+      } else {
+        const todas = [...new Set(Object.values(razasPorClima).flat())];
+        todas.forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r;
+          opt.textContent = r;
+          $raza.appendChild(opt);
+        });
+      }
+    }
+
+    function precioCOP(n) {
+      return n.toLocaleString("es-CO");
+    }
+
+    function render(lista) {
+      $lista.innerHTML = "";
+      if (lista.length === 0) {
+        $lista.innerHTML = `<p class="text-gray-600">No se encontraron resultados.</p>`;
+        return;
+      }
+      lista.forEach(a => {
+        $lista.insertAdjacentHTML("beforeend", `
+          <article class="bg-white rounded-xl shadow overflow-hidden">
+            <img src="${a.imagen}" alt="${a.raza}" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="text-xl font-semibold text-gray-900">${a.raza}</h3>
+              <ul class="mt-2 text-gray-700 space-y-1">
+                <li>Clima: ${a.clima}</li>
+                <li>${a.edad} ${a.edad === 1 ? "año" : "años"}</li>
+                <li>Peso: ${a.peso} kg</li>
+                <li>${a.sexo}</li>
+                <li>${a.municipio}</li>
+              </ul>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-lg font-bold text-gray-900">$${precioCOP(a.precio)}</span>
+                <button class="px-3 py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </article>
+        `);
+      });
+    }
+
+    function filtrar() {
+      const clima = $clima.value;
+      const raza = $raza.value;
+      const sexo = $sexo.value;
+      const ciudad = $ciudad.value;
+      const edadMx = $edad.value ? Number($edad.value) : Infinity;
+      const pesoMx = $peso.value ? Number($peso.value) : Infinity;
+      const precioMx = $precio.value ? Number($precio.value) : Infinity;
+
+      const out = animales.filter(a =>
+        (clima === "" || a.clima === clima) &&
+        (raza === "" || a.raza === raza) &&
+        (sexo === "" || a.sexo === sexo) &&
+        (ciudad === "" || a.municipio === ciudad) &&
+        a.edad <= edadMx &&
+        a.peso <= pesoMx &&
+        a.precio <= precioMx
+      );
+      render(out);
+    }
+
+    function reset() {
+      $clima.value = "";
+      $raza.value = "";
+      $sexo.value = "";
+      $edad.value = "";
+      $peso.value = "";
+      $precio.value = "";
+      $ciudad.value = "";
+      poblarRazas();
+      render(animales);
+    }
+
+    [$clima, $raza, $sexo, $edad, $peso, $precio, $ciudad].forEach(el => {
+      el.addEventListener("input", filtrar);
+      el.addEventListener("change", filtrar);
+    });
+    $clima.addEventListener("change", () => {
+      poblarRazas($clima.value);
+      filtrar();
+    });
+    $btnReset.addEventListener("click", reset);
+
+    poblarRazas();
+    render(animales);
+
+    // ==== Cambio de vista ====
+    const $vistaCompra = document.getElementById("vistaCompra");
+    const $vistaGuia = document.getElementById("vistaGuia");
+    document.getElementById("btnVistaCompra").addEventListener("click", () => {
+      $vistaCompra.classList.remove("hidden");
+      $vistaGuia.classList.add("hidden");
+    });
+    document.getElementById("btnVistaGuia").addEventListener("click", () => {
+      $vistaCompra.classList.add("hidden");
+      $vistaGuia.classList.remove("hidden");
+    });
+
+    // ==== Lógica de guías ====
+    document.getElementById("btnGuia").addEventListener("click", () => {
+      const sexo = document.getElementById("guiaSexo").value;
+      const edad = Number(document.getElementById("guiaEdad").value);
+      const $res = document.getElementById("resultadoGuia");
+
+      if (!sexo || isNaN(edad)) {
+        $res.textContent = "Por favor selecciona el sexo y la edad.";
+        return;
+      }
+
+      let guia = "";
+      if (edad <= 1) {
+        guia = sexo === "Macho"
+          ? "Becerro macho: dieta rica en proteínas, forraje tierno y leche hasta destete."
+          : "Becerra: dieta con leche y suplemento mineral, transición a pasto tierno.";
+      } else if (edad <= 3) {
+        guia = "Joven: pasto de buena calidad, suplemento energético y control sanitario.";
+      } else {
+        guia = sexo === "Macho"
+          ? "Toro adulto: pasturas de alta proteína y balance mineral para mantener peso."
+          : "Vaca adulta: pasto fresco, sales minerales y suplemento según lactancia.";
+      }
+
+      $res.textContent = guia;
+    });
+  </script>
+</body>
+</html>
 
